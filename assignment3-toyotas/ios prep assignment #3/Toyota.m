@@ -9,9 +9,6 @@
 #import "Toyota.h"
 
 @implementation Toyota
-{
-    NSString *_model;
-}
 
 - (instancetype)init
 {
