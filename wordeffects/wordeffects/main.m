@@ -10,46 +10,86 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+        while (YES) {
+            
+            NSLog(@"MENU:\n 1.Uppercase\n 2.Lowercase\n 3.Numberize\n 4.Canadianize\n 5.Respond\n 6.De-Space-It\n ");
+            
+            char inputChars[255];
+            char optionNumber[3];
         
-        // 255 unit long array of characters
-        char inputChars[255];
-        int i = 1;
+            printf("Please input a string: ");
+            scanf("%[^\n]s", inputChars);
+            while(getchar() != '\n');
+            printf("Please input a menu number: ");
+            scanf("%c", optionNumber);
+            while(getchar() != '\n');
+           
         
-        //infinite loop
-        while (i == 1) {
-            
-            
-            printf("Input a string: ");
-            // limit input to max 255 characters
-            fgets(inputChars, 255, stdin);
-            
-            // print as a c string
-            printf("Your string is %s\n", inputChars);
-            
             // convert char array to an NSString object
             NSString *inputString = [NSString stringWithUTF8String:inputChars];
+        
+            //convert option choice to NSString object
+            NSString *inputOption = [NSString stringWithUTF8String:optionNumber];
             
-            // Uppercase
-            NSString *loudString = [inputString uppercaseString];
-            NSLog(@"Your string, but LOUDER, is: %@", loudString);
+            inputString = [inputString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             
-            //Lowercase
-            NSString *lowString = [inputString lowercaseString];
-            NSLog(@"Your string in all lower case is: %@", lowString);
+            NSLog(@"You chose to input this string: %@, and this option: %@", inputString, inputOption);
             
-            //Numberized. integerValue is 0 if string does not have an integerValue.
-            NSInteger numberizedString = [inputString integerValue];
-            if (numberizedString != 0) {
-                NSLog(@"You entered a number!, it is: %li", (long)numberizedString);
+            
+            // 1. Uppercase
+            if ([inputOption isEqualToString:@"1"]) {
+                NSString *loudString = [inputString uppercaseString];
+                NSLog(@"Your string, but LOUDER, is: %@", loudString);
+                NSLog(@"Memory Address: %p", loudString);
+            
+            // 2. Lowercase
+            } else if ([inputOption isEqualToString:@"2"]) {
+                NSString *lowString = [inputString lowercaseString];
+                NSLog(@"Your string in all lower case is: %@", lowString);
+                NSLog(@"Memory Address: %p", lowString);
+            
+            // 3. Numberize
+            } else if ([inputOption isEqualToString:@"3"]) {
+                NSNumberFormatter *numberizedString = [[NSNumberFormatter alloc] init];
+                
+                if ([numberizedString numberFromString:inputString]) {
+                    int integerNumber = [inputString intValue];
+                    NSLog(@"You entered a number!, it is: %i", integerNumber);
+                    
+                } else {
+                    NSLog(@"%@ can't be numberized, it's not a number!", inputString);
+                }
+                
+            // 4. Canadianize
+            } else if ([inputOption isEqualToString:@"4"]) {
+                NSString *canadaString = [inputString stringByAppendingString:@", eh?"];
+                NSLog(@"Canadians would ask/say: %@", canadaString);
+                NSLog(@"Memory Address: %p", canadaString);
+                
+            // 5. Respond
+            } else if ([inputOption containsString:@"5"]) {
+                if ([inputString hasSuffix:@"?"]) {
+                    NSLog(@"I don't know");
+                } else if ([inputString hasSuffix:@"?"]) {
+                    NSLog(@"Whoa, calm down!");
+                } else {
+                    NSLog(@"I was expecting either a ? or !...");
+                }
+                
+            // 6. De-space
+            } else if ([inputOption containsString:@"6"]) {
+                NSString *hyphenatedString = [inputString stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+                NSLog(@"Your string with hyphens instead of spaces is: %@", hyphenatedString);
+                NSLog(@"Memory Address: %p", hyphenatedString);
             }
             
+            else {
+                NSLog(@"\nYour input wasn't what I was expecting...");
+            }
             
-            
-            
-            NSLog(@"The end..., back to the beginning! \n.\n.\n.");
-            i = 1;
-        }
+            NSLog(@".\n.\n.\n");
         
+        }
     }
     return 0;
 }
