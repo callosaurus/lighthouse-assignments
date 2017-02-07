@@ -12,7 +12,7 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         while (YES) {
             
-            NSLog(@"MENU:\n 1.Uppercase\n 2.Lowercase\n 3.Numberize\n 4.Canadianize\n 5.Respond\n 6.De-Space-It\n ");
+            NSLog(@"MENU:\n 1.Uppercase\n 2.Lowercase\n 3.Numberize\n 4.Canadianize\n 5.Respond\n 6.De-Space-It\n 7.Remove Periods");
             
             char inputChars[255];
             char optionNumber[3];
@@ -27,10 +27,9 @@ int main(int argc, const char * argv[]) {
         
             // convert char array to an NSString object
             NSString *inputString = [NSString stringWithUTF8String:inputChars];
-        
             //convert option choice to NSString object
             NSString *inputOption = [NSString stringWithUTF8String:optionNumber];
-            
+            //delete extraneous line break from inputString
             inputString = [inputString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             
             NSLog(@"You chose to input this string: %@, and this option: %@", inputString, inputOption);
@@ -81,13 +80,20 @@ int main(int argc, const char * argv[]) {
                 NSString *hyphenatedString = [inputString stringByReplacingOccurrencesOfString:@" " withString:@"-"];
                 NSLog(@"Your string with hyphens instead of spaces is: %@", hyphenatedString);
                 NSLog(@"Memory Address: %p", hyphenatedString);
+            
+            
+            // 7. Remove Periods
+            } else if ([inputOption containsString:@"7"]) {
+                NSString *modifiedString = [inputString stringByReplacingOccurrencesOfString:@"." withString:@""];
+                NSLog(@"Your string with hyphens instead of spaces is: %@", modifiedString);
+                NSLog(@"Memory Address: %p", modifiedString);
             }
             
             else {
                 NSLog(@"\nYour input wasn't what I was expecting...");
             }
             
-            NSLog(@".\n.\n.\n");
+            NSLog(@"\n.\n.\n.\n");
         
         }
     }
